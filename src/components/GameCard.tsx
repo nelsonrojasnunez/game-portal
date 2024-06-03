@@ -16,6 +16,14 @@ interface Props {
   game: Game;
 }
 const GameCard = ({ game }: Props) => {
+  const getPlatforms = (platforms: PlatformGameItem[]) => {
+    let platformList = "";
+    platforms.map((platform: PlatformGameItem) => {
+      platformList += platform.platform.slug + " ";
+    });
+
+    return platformList;
+  };
   return (
     <Card key={"game_" + game.id} maxH="xs">
       <CardBody>
@@ -28,12 +36,11 @@ const GameCard = ({ game }: Props) => {
             <Badge>{game.metacritic}</Badge>
           </VStack>
           <VStack alignItems="flex-start">
-            {game.platforms &&
-              game.platforms.map((platform: PlatformGameItem) => (
-                <Text fontSize="2xs" key={platform.platform.id}>
-                  {platform.platform.slug}
-                </Text>
-              ))}
+            {game.platforms && (
+              <Text fontSize="2xs" key={"platforms_" + game.id}>
+                {getPlatforms(game.platforms)}
+              </Text>
+            )}
           </VStack>
         </Flex>
       </CardBody>
