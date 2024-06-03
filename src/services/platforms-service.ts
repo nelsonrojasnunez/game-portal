@@ -12,4 +12,9 @@ export interface PlatformResult {
   results: Platform[]
 }
 
+
+export interface PlatformGameItem {
+  platform: Platform;
+}
+
 export default create('/platforms');

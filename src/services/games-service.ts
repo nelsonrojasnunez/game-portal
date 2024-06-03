@@ -1,4 +1,5 @@
 import create from "./http-service";
+import { PlatformGameItem } from "./platforms-service";
 
 export interface GamePlatforms {
   id: number;
@@ -13,7 +14,7 @@ export interface Game {
     background_image: string;
     metacritic: number;
     released: string;
-    platforms: GamePlatforms[];
+    platforms: PlatformGameItem[];
 }
 
 export interface GameResult {    

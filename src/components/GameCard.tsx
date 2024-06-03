@@ -5,17 +5,18 @@ import {
   Heading,
   Flex,
   VStack,
-  Link,
   Badge,
+  Text,
   Image,
-  Box,
-} from "@chakra-ui/react";
-import { Game, GamePlatforms } from "../services/games-service";
+  } from "@chakra-ui/react";
+import { Game } from "../services/games-service";
+import { PlatformGameItem } from "../services/platforms-service";
 
 interface Props {
   game: Game;
 }
 const GameCard = ({ game }: Props) => {
+  console.log("^^^", game.platforms)
   return (
     <Card key={"game_" + game.id} maxH="xs">
       <CardBody>
@@ -26,8 +27,8 @@ const GameCard = ({ game }: Props) => {
         <Flex direction="row">
           \{" "}
           {game.platforms &&
-            game.platforms.map((platform: GamePlatforms) => (
-              <Link key={platform.id}>{platform.name}</Link>
+            game.platforms.map((platform: PlatformGameItem) => (
+              <Text fontSize="3xs" key={platform.platform.id}>{platform.platform.name}</Text>
             ))}
           <VStack alignItems="flex-end">
             <Badge>{game.metacritic}</Badge>
