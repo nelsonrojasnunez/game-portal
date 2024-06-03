@@ -9,9 +9,14 @@ import {
   Switch,
   useColorMode,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 
-const Navbar = () => {
+interface Props {
+  onChange: (searchText: string) => void;
+}
+
+const Navbar = ({ onChange }: Props) => {
   const { toggleColorMode } = useColorMode();
   return (
     <>
@@ -26,7 +31,15 @@ const Navbar = () => {
           />
         </VStack>
         <VStack h="full" w="full" p={5} alignItems="flex-start">
-          <Input p={2} placeholder="Search here" size="lg" />
+          <Input
+            onChange={(evt) => {
+              onChange(evt.target.value);
+              console.log("--->", evt.target.value);
+            }}
+            p={2}
+            placeholder="Search here"
+            size="lg"
+          />
         </VStack>
         <VStack h="full" p={5} alignItems="flex-start" w="xs">
           <FormControl display="flex" alignItems="center">

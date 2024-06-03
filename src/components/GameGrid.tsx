@@ -13,9 +13,17 @@ import { Platform } from "../services/platforms-service";
 import { Game } from "../services/games-service";
 import GameCard from "./GameCard";
 
-const GameGrid = () => {
+interface Props {
+  searchText: string;
+}
+
+const GameGrid = ({ searchText }: Props) => {
   const { platforms } = usePlatforms();
   const { games } = useGames();
+  const visibleGames: Game[] =
+    games && searchText !== ""
+      ? games.results.filter((game) => game.name.indexOf(searchText) !== -1)
+      : games.results;
 
   return (
     <>
@@ -54,8 +62,8 @@ const GameGrid = () => {
           spacing={4}
           templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
         >
-          {games &&
-            games.results.map((game: Game) => (
+          {visibleGames &&
+            visibleGames.map((game: Game) => (
               <GameCard game={game} key={game.id} />
             ))}
         </SimpleGrid>
