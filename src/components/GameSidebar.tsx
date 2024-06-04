@@ -3,7 +3,11 @@ import useGenres from "../hooks/useGenres";
 import { VStack, Link, Text } from "@chakra-ui/react";
 import { Genre } from "../services/genres-service";
 
-const GameSidebar = () => {
+interface Props {
+  handleGenreSelection: (genre: string) => void;
+}
+
+const GameSidebar = ({ handleGenreSelection }: Props) => {
   const { genres } = useGenres();
 
   return (
@@ -13,7 +17,9 @@ const GameSidebar = () => {
 
         {genres &&
           genres.results.map((item: Genre) => (
-            <Link key={item.id}>{item.name}</Link>
+            <Link key={item.id} onClick={() => handleGenreSelection(item.slug)}>
+              {item.name}
+            </Link>
           ))}
       </VStack>
     </>

@@ -1,3 +1,4 @@
+import { Genre } from "./genres-service";
 import create from "./http-service";
 import { PlatformGameItem } from "./platforms-service";
 
@@ -15,6 +16,7 @@ export interface Game {
     metacritic: number;
     released: string;
     platforms: PlatformGameItem[];
+    genres: Genre[];
 }
 
 export interface GameResult {    

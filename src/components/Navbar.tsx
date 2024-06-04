@@ -9,7 +9,7 @@ import {
   Switch,
   useColorMode,
 } from "@chakra-ui/react";
-import { useState } from "react";
+
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 interface Props {

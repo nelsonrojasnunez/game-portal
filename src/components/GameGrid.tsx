@@ -14,16 +14,39 @@ import { Game } from "../services/games-service";
 import GameCard from "./GameCard";
 
 interface Props {
-  searchText: string;
+  searchText?: string;
+  platformFilter?: number;
+  genreFilter?: string;
+  onPlatformFilterChange: (input: number) => void;
 }
 
-const GameGrid = ({ searchText }: Props) => {
+const GameGrid = ({
+  searchText = "",
+  platformFilter = 0,
+  genreFilter = "",
+  onPlatformFilterChange,
+}: Props) => {
   const { platforms } = usePlatforms();
   const { games } = useGames();
-  const visibleGames: Game[] =
-    games && searchText !== ""
-      ? games.results.filter((game) => game.name.indexOf(searchText) !== -1)
-      : games.results;
+
+  let visibleGames: Game[];
+  games?.results && searchText !== ""
+    ? (visibleGames = games.results.filter(
+        (game) => game.name.indexOf(searchText) !== -1
+      ))
+    : (visibleGames = games?.results);
+
+  if (platformFilter !== 0)
+    visibleGames = visibleGames.filter(
+      (game) =>
+        game.platforms.find((p) => p.platform.id === platformFilter) !==
+        undefined
+    );
+
+  if (genreFilter !== "")
+    visibleGames = visibleGames.filter(
+      (game) => game.genres.find((g) => g.slug === genreFilter) !== undefined
+    );
 
   return (
     <>
@@ -31,7 +54,12 @@ const GameGrid = ({ searchText }: Props) => {
         <Text fontSize="3xl">Games List</Text>
         <Flex h="6rem">
           <VStack h="full" p={5} alignItems="flex-start" w="sm">
-            <Select placeholder="Select platform">
+            <Select
+              placeholder="Select platform"
+              onChange={(evt) =>
+                onPlatformFilterChange(Number(evt.target.value))
+              }
+            >
               {platforms &&
                 platforms.results.map((item: Platform) => (
                   <option key={"platform" + item.id} value={item.id}>
